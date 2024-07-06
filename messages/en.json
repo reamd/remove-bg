@@ -1,0 +1,14 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "upload_image": "Upload Image",
+  "drop_an_image": "drop an image",
+  "download": "download",
+  "delete_result": "delete",
+  "change_background": "change background",
+  "download_model_message": "Downloading a model file of approximately 5MB. Please be patient.",
+  "notes": "Notes",
+  "download_failed": "Download failed, please refresh and try again.",
+  "drop_anywhere": "Drop image anywhere",
+  "try_one": "No image? Try one of these",
+  "processing_image": "Processing the image..."
+}

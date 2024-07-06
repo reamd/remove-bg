@@ -1,0 +1,4 @@
+node_modules
+.github
+build
+public/ort-wasm-simd.jsep.wasm

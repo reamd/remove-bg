@@ -14,65 +14,68 @@
 
 </div>
 
-> :rocket:A free, open-source tool powered by WebGPU and WebAssembly (WASM) in the browser, efficiently removes backgrounds from images without any additional costs or privacy concerns.
+> :rocket:基于WebGPU和WebAssembly (WASM)，实现抠图工具，图片在用户浏览器本地离线运行，无需担心隐私风险。
 
 <div align="center">
 <img src="src/assets/img/example.png" width=600/>
 </div>
 
-### Demo link
+### 体验网址
 
 [https://reamd.github.io/remove-bg](https://reamd.github.io/remove-bg)
 
-## :computer:How to use
+## :computer:如何使用
 
-### Locally
+### 本地运行模式
 
-1. Clone this repository
+1. 克隆仓库
 
 ```bash
 git clone https://github.com/reamd/remove-bg.git
 cd remove-bg
 ```
 
-2. Install dependencies
+2. 安装依赖
 
 ```bash
 npm install
 ```
 
-3. Start web-application
+3. 运行Web应用
 
 ```bash
 npm run start
 ```
 
-### Docker
+### Docker模式
 
-1. Clone this repository
+1. 克隆仓库
 
 ```bash
 git clone https://github.com/reamd/remove-bg.git
 cd remove-bg
 ```
 
-2. Docker run
+2. 运行Docker
 
 ```bash
 docker run -d -p 8080:80
 ```
 
-## :star:Contact
+## :star:联系我
 
-If you have any question, please follow me on X:
+如果你有任何问题，请关注我的`X`或微信公众号:
 
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/DJ_wilderness)](https://x.com/DJ_wilderness)
+- [![X关注](https://img.shields.io/twitter/follow/DJ_wilderness)](https://x.com/DJ_wilderness)
 
-## :information_desk_person:Acknowledgements
+- 微信公众号
+  ![微信公众号](https://raw.githubusercontent.com/reamd/reamd/master/assets/wechat_pub_acct.jpg)
 
-Model: [xuebinqin/U-2-Net](https://github.com/xuebinqin/U-2-Net)
+## :information_desk_person:致谢
 
-### BibTeX
+模型: [xuebinqin/U-2-Net](https://github.com/xuebinqin/U-2-Net)
+
+### 引用
 
 ```
 @InProceedings{Qin_2020_PR,

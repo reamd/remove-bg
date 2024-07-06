@@ -1,0 +1,12 @@
+:root {
+  --checkerboard-black-color: #f8f9f9;
+  --checkerboard-white-color: transparent;
+}
+
+.App {
+  text-align: center;
+}
+
+.selected-color {
+  border: 3px solid #195df3 !important;
+}

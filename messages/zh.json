@@ -1,0 +1,14 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "upload_image": "选择图片",
+  "drop_an_image": "拖拽图片到这里上传",
+  "download": "下载",
+  "delete_result": "删除",
+  "change_background": "选择背景",
+  "download_model_message": "需连接国际互联网下载5M左右的模型文件，请耐心等待。",
+  "notes": "温馨提示",
+  "download_failed": "下载失败，请检查是否连接了国际互联网，然后刷新重试。",
+  "drop_anywhere": "任意放置图片",
+  "try_one": "试一试",
+  "processing_image": "处理图片中..."
+}
