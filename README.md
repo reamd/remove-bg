@@ -1,15 +1,12 @@
-# <div style="display: flex; justify-content: center;"><img src="src/assets/img/logo.svg" style="width: 40px; margin-right: 8px;" />remove-bg</div>
+# <div align="center">REMOVE-BG</div>
 
-### <div align="center"><b><a href="README.md">English</a> | <a href="README_CN.md">简体中文</a></b></div>
+### <div align="center"><b>English | <a href="README_CN.md">简体中文</a></b></div>
 
 <div align="center">
 
 [![download](https://img.shields.io/github/downloads/reamd/remove-bg/total.svg)](https://github.com/reamd/remove-bg/releases)
-
 [![Open issue](https://img.shields.io/github/issues/reamd/remove-bg)](https://github.com/reamd/remove-bg/issues)
-
 [![Closed issue](https://img.shields.io/github/issues-closed/reamd/remove-bg)](https://github.com/reamd/remove-bg/issues)
-
 [![LICENSE](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://github.com/reamd/remove-bg/blob/master/LICENSE)
 
 </div>
@@ -22,7 +19,7 @@
 
 ### Demo link
 
-[https://reamd.github.io/remove-bg](https://reamd.github.io/remove-bg)
+[https://remove-bg.djfos.fun](https://remove-bg.djfos.fun)
 
 ## :computer:How to use
 
@@ -49,17 +46,8 @@ npm run start
 
 ### Docker
 
-1. Clone this repository
-
 ```bash
-git clone https://github.com/reamd/remove-bg.git
-cd remove-bg
-```
-
-2. Docker run
-
-```bash
-docker run -d -p 8080:80
+docker run -d -p 8080:80 --name remove-bg reamd/remove-bg:latest
 ```
 
 ## :star:Contact
