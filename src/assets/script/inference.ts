@@ -11,7 +11,6 @@ let sessionIsRunning = false;
 let session: ORT.InferenceSession | null = null;
 
 function getImageData(imageData: ImageData) {
-  // return ndarray(new Uint8Array(imageData.data), [
   return ndarray(imageData.data, [imageData.height, imageData.width, 4]);
 }
 
@@ -139,6 +138,22 @@ export function createCanvas(width: number, height: number) {
   return canvas;
 }
 
+export function getCanvasData(imgUrl: string): Promise<ImageData> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = async () => {
+      const { width, height } = img;
+      let canvas: CanvasType | null = createCanvas(width, height) as CanvasType;
+      const ctx = canvas.getContext('2d') as
+        | CanvasRenderingContext2D
+        | OffscreenCanvasRenderingContext2D;
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(ctx.getImageData(0, 0, width, height));
+    };
+    img.src = imgUrl;
+  });
+}
+
 export async function initSession() {
   const webCanUse = await getWebCanUse();
   const ort = webCanUse.webGpu ? ort_gpu : ort_cpu;
@@ -161,13 +176,14 @@ export async function initSession() {
   return ort;
 }
 
-async function inference(canvasImageData: ImageData) {
+async function inference(imageUrl: string) {
   if (sessionIsRunning) {
     return;
   }
   sessionIsRunning = true;
   const ort = await initSession();
   console.time('sessionRun');
+  const canvasImageData = await getCanvasData(imageUrl);
   const imageData = await getImageData(canvasImageData);
   const [originHeight, originWidth] = imageData.shape; // [536, 694, 4]
   const resolution = 320;

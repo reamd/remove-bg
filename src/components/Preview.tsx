@@ -129,74 +129,64 @@ const Preview: React.FC<PreviewComponentProps> = ({
 
   useEffect(() => {
     setShowMask(true);
-    draw(originUrl)
-      .then((imageData) => {
-        return inference(imageData as ImageData);
-      })
-      .then((res) => {
-        if (!res) return;
-        const blobURL = URL.createObjectURL(res);
-        draw(blobURL);
-        setShowMask(false);
-        setHandledUrl(blobURL);
-        fireTransition();
-      });
+    // origin image
+    draw(originUrl);
+
+    // handle image
+    inference(originUrl).then((res) => {
+      if (!res) return;
+      const blobURL = URL.createObjectURL(res);
+      draw(blobURL);
+      setShowMask(false);
+      setHandledUrl(blobURL);
+      fireTransition();
+    });
   }, [originUrl]);
 
-  const draw = (
-    dataUrl: string,
-    background: string = ''
-  ): Promise<ImageData | null> => {
-    return new Promise((resolve, reject) => {
-      const ctx = canvasRef.current?.getContext('2d');
-      if (ctx && dataUrl) {
-        ctx.clearRect(
-          0,
-          0,
-          canvasRef.current?.width || 0,
-          canvasRef.current?.height || 0
-        );
+  const draw = (dataUrl: string, background: string = '') => {
+    const ctx = canvasRef.current?.getContext('2d');
+    if (ctx && dataUrl) {
+      ctx.clearRect(
+        0,
+        0,
+        canvasRef.current?.width || 0,
+        canvasRef.current?.height || 0
+      );
 
-        const img = new Image();
-        img.onload = async () => {
-          let width = 0;
-          let height = 0;
-          if (canvasRef.current?.width && canvasRef.current?.height) {
-            width = canvasRef.current?.width;
-            height = canvasRef.current?.height;
-          } else {
-            if (canvasRef.current) {
-              originWidth = img.width;
-              originHeight = img.height;
-              [width = 0, height = 0] = calcCanvasShape(
-                originWidth,
-                originHeight
-              );
-            }
-          }
+      const img = new Image();
+      img.onload = async () => {
+        let width = 0;
+        let height = 0;
+        if (canvasRef.current?.width && canvasRef.current?.height) {
+          width = canvasRef.current?.width;
+          height = canvasRef.current?.height;
+        } else {
           if (canvasRef.current) {
-            canvasRef.current.width = width;
-            canvasRef.current.height = height;
-            setSliderWidth(`${width}px`);
-            setSliderHeight(`${height}px`);
+            originWidth = img.width;
+            originHeight = img.height;
+            [width = 0, height = 0] = calcCanvasShape(
+              originWidth,
+              originHeight
+            );
           }
-          if (
-            background &&
-            (background.indexOf('#') > -1 || background === 'transparent')
-          ) {
-            ctx.fillStyle = background;
-            ctx.fillRect(0, 0, width, height);
-          }
-          ctx.drawImage(img, 0, 0, width, height);
-          if (background) {
-            resolve(null);
-          } else {
-            resolve(ctx.getImageData(0, 0, width, height));
-          }
-        };
-        img.src = dataUrl;
-      }
-    });
+        }
+        if (canvasRef.current) {
+          canvasRef.current.width = width;
+          canvasRef.current.height = height;
+          setSliderWidth(`${width}px`);
+          setSliderHeight(`${height}px`);
+        }
+        if (
+          background &&
+          (background.indexOf('#') > -1 || background === 'transparent')
+        ) {
+          ctx.fillStyle = background;
+          ctx.fillRect(0, 0, width, height);
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+      };
+      img.src = dataUrl;
+    }
   };
 
   const handleChangeBg = (backgroundColor: string) => {
