@@ -20,8 +20,8 @@ function resizeTensorBilinear(
   newHeight: number
 ) {
   const [originHeight, originWidth, originChannel] = imageTensor.shape;
-  let scaleX = originWidth / newWidth;
-  let scaleY = originHeight / newHeight;
+  const scaleX = originWidth / newWidth;
+  const scaleY = originHeight / newHeight;
   const resizedImageTensor = ndarray(
     new Uint8Array(originChannel * newWidth * newHeight),
     [newHeight, newWidth, originChannel]
@@ -86,7 +86,7 @@ function tensorHWCtoBCHW(
   const [originHeight, originWidth] = imageTensor.shape;
   const stride = originHeight * originWidth;
   const float32Data = new Float32Array(3 * stride);
-  const [_, max] = getBufferExtremum(imageBufferData);
+  const [, max] = getBufferExtremum(imageBufferData);
   for (let i = 0, j = 0; i < imageBufferData.length; i += 4, j += 1) {
     float32Data[j] = (imageBufferData[i] / max - mean[0]) / std[0];
     float32Data[j + stride] = (imageBufferData[i + 1] / max - mean[1]) / std[1];
@@ -117,9 +117,36 @@ function imageToBlob(imageTensor: NdArray<Uint8ClampedArray>, quality = 0.8) {
     | CanvasRenderingContext2D
     | OffscreenCanvasRenderingContext2D;
   ctx.putImageData(imageData, 0, 0);
-  return (canvas as any).convertToBlob({
+
+  return canvasToBlob(canvas, {
     quality,
     type: 'image/png',
+  });
+}
+
+export async function canvasToBlob(
+  canvas: CanvasType,
+  params: { type: string; quality: number }
+): Promise<Blob> {
+  const { type, quality } = params;
+  if (canvas instanceof HTMLCanvasElement) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob: Blob | null) => {
+          if (blob instanceof Blob) {
+            resolve(blob);
+          } else {
+            reject();
+          }
+        },
+        type,
+        quality
+      );
+    });
+  }
+  return canvas.convertToBlob({
+    quality,
+    type,
   });
 }
 
@@ -143,7 +170,10 @@ export function getCanvasData(imgUrl: string): Promise<ImageData> {
     const img = new Image();
     img.onload = async () => {
       const { width, height } = img;
-      let canvas: CanvasType | null = createCanvas(width, height) as CanvasType;
+      const canvas: CanvasType | null = createCanvas(
+        width,
+        height
+      ) as CanvasType;
       const ctx = canvas.getContext('2d') as
         | CanvasRenderingContext2D
         | OffscreenCanvasRenderingContext2D;

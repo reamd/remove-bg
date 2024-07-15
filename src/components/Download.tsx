@@ -12,8 +12,7 @@ import { MODEL_URL } from '../assets/script/config';
 import * as m from '../paraglide/messages';
 import { initSession } from '../assets/script/inference';
 
-interface DownloadComponentProps {}
-const Download: React.FC<DownloadComponentProps> = () => {
+const Download: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [progress, setProgress] = useState(0);
   const [downloadFailed, setDownloadFailed] = useState(false);

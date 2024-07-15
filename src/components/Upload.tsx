@@ -1,12 +1,7 @@
-import React, { useState, useRef, DragEvent } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@nextui-org/react';
 import corner from '../assets/img/corner.svg';
 import * as m from '../paraglide/messages';
-
-interface FileListState {
-  files: File[];
-  previewImage?: string;
-}
 
 interface UploadComponentProps {
   onFileChange: (dataUrl: string, imgName: string) => void;

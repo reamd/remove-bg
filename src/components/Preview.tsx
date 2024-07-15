@@ -8,6 +8,7 @@ import Background from './Backgound';
 import * as m from '../paraglide/messages';
 import inference, {
   createCanvas,
+  canvasToBlob,
   CanvasType,
 } from '../assets/script/inference';
 
@@ -19,7 +20,7 @@ interface PreviewComponentProps {
 
 let originWidth: number;
 let originHeight: number;
-let handledImgBgColor: string = '';
+let handledImgBgColor = '';
 
 const calcCanvasShape: (w: number, h: number) => [number, number] = (w, h) => {
   let canvasWidth: number;
@@ -35,10 +36,7 @@ const calcCanvasShape: (w: number, h: number) => [number, number] = (w, h) => {
 };
 
 const downloadImage = (handledImgUrl: string, name: string) => {
-  let canvas: CanvasType | null = createCanvas(
-    originWidth,
-    originHeight
-  ) as CanvasType;
+  const canvas: CanvasType = createCanvas(originWidth, originHeight);
   const ctx = canvas.getContext('2d') as
     | CanvasRenderingContext2D
     | OffscreenCanvasRenderingContext2D;
@@ -53,7 +51,7 @@ const downloadImage = (handledImgUrl: string, name: string) => {
       ctx.fillRect(0, 0, originWidth, originHeight);
     }
     ctx.drawImage(img, 0, 0, originWidth, originHeight);
-    const imageBlob = await (canvas as any).convertToBlob({
+    const imageBlob = await canvasToBlob(canvas, {
       quality: 0.8,
       type: 'image/png',
     });
@@ -71,7 +69,6 @@ const downloadImage = (handledImgUrl: string, name: string) => {
 
     setTimeout(() => {
       link.remove();
-      canvas = null;
     }, 100);
   };
   img.src = handledImgUrl;
@@ -143,7 +140,7 @@ const Preview: React.FC<PreviewComponentProps> = ({
     });
   }, [originUrl]);
 
-  const draw = (dataUrl: string, background: string = '') => {
+  const draw = (dataUrl: string, background = '') => {
     const ctx = canvasRef.current?.getContext('2d');
     if (ctx && dataUrl) {
       ctx.clearRect(
