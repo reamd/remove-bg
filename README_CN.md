@@ -1,4 +1,4 @@
-# <div align="center"><img src="src/assets/img/remove-bg_logo.png" width=450/></div>
+# <div align="center"><img src="src/assets/img/remove-bg_logo.png" width=300/></div>
 
 ### <div align="center"><b><a href="README.md">English</a> | 简体中文</b></div>
 
